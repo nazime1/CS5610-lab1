@@ -36,7 +36,7 @@ export default function Lab1() {
     <ul id="wd-my-books">
       <li>Dune</li>
       <li>Lord of the Rings</li>
-      <li>Ender's Game</li>
+      <li>Ender&apos;s Game</li>
       <li>Red Mars</li>
       <li>The Forever War</li>
     </ul>
@@ -166,12 +166,6 @@ export default function Lab1() {
     in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
     occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
     </div>
-  
-  <h5 id="wd-buttons">Buttons</h5>
-  <button type="button"
-  id="wd-all-good">
-    Hello World!
-  </button>
 
 <h5 id="wd-radio-buttons">Radio buttons</h5>
 
