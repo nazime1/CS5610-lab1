@@ -249,7 +249,7 @@ Please
 <a href="https://www.lipsum.com" id="wd-lipsum">click here</a>
 to get dummy text<br/>
 
-<a href="https://github.com/nazime1/CS5610-lab1" id="wd-github">Clcik here</a>
+<a href="https://github.com/nazime1/CS5610-lab1" id="wd-github">Click here</a>
 for the code for this site<br/>
 
 
