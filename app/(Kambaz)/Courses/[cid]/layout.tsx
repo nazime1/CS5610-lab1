@@ -1,7 +1,10 @@
 import { ReactNode } from "react";
 import CourseNavigation from "./Navigation";
+
+type Params = Promise<{ cid: string }>
+
 export default async function CoursesLayout(
-  { children, params }: Readonly<{ children: ReactNode; params: Promise<{ id: string }> }>) {
+  { children, params }: Readonly<{ children: ReactNode; params: Params }>) {
  const { cid } = await params;
  return (
    <div id="wd-courses">
