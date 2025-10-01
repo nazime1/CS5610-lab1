@@ -1,6 +1,6 @@
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import ModulesControls from "./ModulesControls";
-import CourseStatus from "./CourseStatus";
+import CourseStatus from "../Home/Status";
 
 export default function Modules() {
   return (
