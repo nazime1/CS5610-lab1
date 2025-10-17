@@ -1,11 +1,19 @@
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 import Link from "next/link";
 import { InputGroup, FormControl, Button, Container, Row, Col, ListGroup, ListGroupItem } from "react-bootstrap";
 import InputGroupText from "react-bootstrap/InputGroupText";
 import { CiSearch } from "react-icons/ci";
-import { IoIosAdd, IoIosArrowDropdownCircle } from "react-icons/io";
+import { IoIosAdd } from "react-icons/io";
 import { MdAssignment } from "react-icons/md";
+import * as db from "../../../Database";
 
-export default function Assignments() {
+type Params = Promise<{ cid: string }>    
+
+export default async function Assignments(    
+  { params, }: Readonly<{ params: Params }>) { 
+const { cid } = await params;
+const assignments = db.assignments;
   return (
 <Container>
     <Row>
@@ -33,15 +41,12 @@ export default function Assignments() {
     <Row>
     <Col>
     <ListGroup id="wd-assignments">
-    <ListGroupItem id="wd-a1"><Link href="Assignments/123"><h3><MdAssignment/>A1</h3></Link><br/>Multiple modules, not available until September 22 at 12:00am
-    <br/>Due September 29 at 11:59pm
-    </ListGroupItem>
-    <ListGroupItem id="wd-a2"><Link href="Assignments/234"><h3><MdAssignment/>A2</h3></Link><br/>Multiple modules, not available until September 29 at 12:00am
-    <br/>Due October 6 at 11:59pm
-    </ListGroupItem>
-    <ListGroupItem id="wd-a3"><Link href="Assignments/345"><h3><MdAssignment/>A3</h3></Link><br/>Multiple modules, not available until October 6 at 12:00am
-    <br/>Due October 13 at 11:59pm
-    </ListGroupItem>
+    {assignments
+	    .filter((asmnt : any) => asmnt.course === cid)
+	    .map((assignment : any) => (
+    <ListGroupItem key={assignment._id} id="wd-assignment"><Link href={`Assignments/${assignment._id}`}><h3><MdAssignment/>{assignment.title}</h3></Link><br/>
+    <br/>
+    </ListGroupItem>))}
     </ListGroup>
     </Col>
     </Row>
