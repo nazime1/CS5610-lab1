@@ -1,37 +1,50 @@
 import Link from "next/link";
+import { InputGroup, FormControl, Button, Container, Row, Col, ListGroup, ListGroupItem } from "react-bootstrap";
+import InputGroupText from "react-bootstrap/InputGroupText";
+import { CiSearch } from "react-icons/ci";
+import { IoIosAdd, IoIosArrowDropdownCircle } from "react-icons/io";
+import { MdAssignment } from "react-icons/md";
 
 export default function Assignments() {
   return (
-    <div id="wd-assignments">
-      <input placeholder="Search for Assignments"
-             id="wd-search-assignment" />
-      <button id="wd-add-assignment-group">+ Group</button>
-      <button id="wd-add-assignment">+ Assignment</button>
-      <h3 id="wd-assignments-title">
-        ASSIGNMENTS 40% of Total <button>+</button> </h3>
-      <ul id="wd-assignment-list">
-        <li className="wd-assignment-list-item">
-          <Link href="/Courses/1234/Assignments/123"
-             className="wd-assignment-link">
-            A1 - ENV + HTML
-	  </Link></li>
-	  Multiple Modules | <b>Not available until</b> September 22 at 12:00am <br/>
-	  <b>Due</b> September 29 at 11:59pm | 100 pts
-        <li className="wd-assignment-list-item">
-          <Link href="/Courses/1234/Assignments/234"
-	     className="wd-assignment-link">
-	     A2 - CSS + BOOTSTRAP
-	</Link></li>
-	Multiple Modules | <b>Not avaialble</b> until September 29 at 12:00am <br/>
-	<b>Due</b> October 6 at 11:59pm | 100 pts
-        <li className="wd-assignment-list-item">
-	   <Link href="/Courses/1234/Assignments/345"
-	      className="wd-assignment-link">
-	      A3 - JAVASCRIPT + REACT
-	</Link></li>
-	Multiple Modules | <b>Not available</b> until October 6 at 12:00am <br/>
-	<b>Due</b> October 13 at 11:59pm | 100 pts
-      </ul>
-    </div>
+<Container>
+    <Row>
+    <Col>
+    </Col>
+    <Col>
+    <InputGroup className="mb-3" style={{ width: 400 }}>
+    <InputGroupText id="wd-search"><CiSearch/></InputGroupText>
+    <FormControl placeholder="Search..." aria-label="search" aria-describedby="wd-search"/>
+    </InputGroup>
+    </Col>
+    <Col>
+    </Col>
+    <Col>
+    <Button variant="secondary" size="lg" className="w-100" style={{ width : 200 }}>
+    <IoIosAdd className="me-2 fs-5"/>Group</Button>
+    </Col>
+    <Col>
+    <Button variant="danger" size="lg" className="w-100" style={{ width : 200 }}>
+    <IoIosAdd className="me-2 fs-5" style={{ color: "white" }}/>Assignment</Button>
+    </Col>
+    </Row>
+    <Row>
+    </Row>
+    <Row>
+    <Col>
+    <ListGroup id="wd-assignments">
+    <ListGroupItem id="wd-a1"><Link href="Assignments/123"><h3><MdAssignment/>A1</h3></Link><br/>Multiple modules, not available until September 22 at 12:00am
+    <br/>Due September 29 at 11:59pm
+    </ListGroupItem>
+    <ListGroupItem id="wd-a2"><Link href="Assignments/234"><h3><MdAssignment/>A2</h3></Link><br/>Multiple modules, not available until September 29 at 12:00am
+    <br/>Due October 6 at 11:59pm
+    </ListGroupItem>
+    <ListGroupItem id="wd-a3"><Link href="Assignments/345"><h3><MdAssignment/>A3</h3></Link><br/>Multiple modules, not available until October 6 at 12:00am
+    <br/>Due October 13 at 11:59pm
+    </ListGroupItem>
+    </ListGroup>
+    </Col>
+    </Row>
+    </Container>
 );}
 
