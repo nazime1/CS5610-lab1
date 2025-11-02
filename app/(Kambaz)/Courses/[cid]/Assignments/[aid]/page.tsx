@@ -5,16 +5,20 @@ import { Form, FormLabel, FormControl, FormCheck, Row, Col, FormSelect, Button }
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useParams } from "next/navigation";
 import * as db from "../../../../Database";
+import { addAssignment, editAssignment, updateAssignment, deleteAssignment } from "../reducer";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../../../store";
 
 export default function AssignmentEditor() {
   const params = useParams<{ cid: string; aid: string; }>();
-  const assignments = db.assignments;
+  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
   const assignment = assignments.filter((asmnt : any) => asmnt._id === params.aid);
+  const dispatch = useDispatch();
   return (
     <div id="wd-assignments-editor">
       <Form>
       <FormLabel>Assignment Name</FormLabel>
-      <FormControl type="text" defaultValue={assignment[0].title}/>
+      <FormControl type="text" defaultValue={assignment[0]?.title}/>
       <FormControl as="textarea" defaultValue="The assignment is available online Submit a link to the landing page of your Web application running on Netlify. The landing page should include the following: Your full name and section Links to each of the lab  assignments Link to the Kanbas application Links to all relevant source code Links to all relevant source code repositories The Kanbas application should include a link to navigate back to the landing page."/><br/>
       <Row>
       <FormLabel column sm="2">Points</FormLabel>
@@ -102,7 +106,8 @@ export default function AssignmentEditor() {
       </Row>
       <Row>
       <Col>
-      <Button variant="success" href={`/Courses/${params.cid}/Assignments`}>Save</Button>
+      <Button variant="success" href={`/Courses/${params.cid}/Assignments`} 
+      onClick={(e) => dispatch(updateAssignment({ ...assignment }))}>Save</Button>
       </Col>
       <Col>
       <Button variant="danger" href={`/Courses/${params.cid}/Assignments`}>Cancel</Button>
