@@ -16,7 +16,13 @@ const pathname = usePathname();
        <NavLink href="/Labs/Lab2" as={Link} className={`nav-link ${pathname.endsWith("Lab2") ? "active" : ""}`}>Lab 2</NavLink>
      </NavItem>
      <NavItem>
-       <NavLink href="/Labs/Lab3" as={Link} className={`nav-link ${pathname.endsWith("La3") ? "active" : ""}`}>Lab 3</NavLink>
+       <NavLink href="/Labs/Lab3" as={Link} className={`nav-link ${pathname.endsWith("Lab3") ? "active" : ""}`}>Lab 3</NavLink>
+     </NavItem>
+     <NavItem>
+     	<NavLink href="/Labs/Lab4" as={Link} className={`nav-link ${pathname.endsWith("Lab4") ? "active" : ""}`}>Lab 4</NavLink>
+     </NavItem>
+     <NavItem>
+        <NavLink href="/Labs/Lab5" as={Link} className={`nav-link ${pathname.endsWith("Lab5") ? "active" : ""}`}>Lab 5</NavLink>
      </NavItem>
      <NavItem>
        <NavLink href="/" as={Link}>Kambaz</NavLink>

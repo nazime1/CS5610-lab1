@@ -1,23 +1,29 @@
+"use client";
+/* eslint-disable  @typescript-eslint/no-explicit-any */
+
 import { ReactNode } from "react";
 import CourseNavigation from "./Navigation";
+import { useSelector } from "react-redux";
+import { useParams } from "next/navigation";
+import { RootState } from "../../store";
 import { FaAlignJustify } from "react-icons/fa6";
-import { courses } from "../../Database";
+import { useState } from "react";
 
-type Params = Promise<{ cid: string }>
-
-export default async function CoursesLayout(
-  { children, params }: Readonly<{ children: ReactNode; params: Params }>) {
- const { cid } = await params;
- const course = courses.find((course) => course._id === cid);
+export default function CoursesLayout({ children }: { children: ReactNode }) {
+ const { cid } = useParams();
+ const { courses } = useSelector((state: RootState) => state.coursesReducer);
+ const course = courses.find((course: any) => course._id === cid);
+ const [ toggle, setToggle ] = useState(true);
+ const cidString = String(cid);
  return (
    <div id="wd-courses">
      <h2 className ="text-danger">
-     <FaAlignJustify className="me-4 fs-4 mb-1" />
+     <FaAlignJustify className="me-4 fs-4 mb-1" onClick={() => setToggle(!toggle)}/>
      {course?.name}</h2> <hr />
      <div className="d-flex">
-     <div className="d-none d-md-block">
-	<CourseNavigation cid={cid}/>
-     </div>
+     {toggle && <div className="d-none d-md-block">
+	<CourseNavigation cid={cidString}/>
+     </div>}
      <div className="flex-fill">
      {children}
      </div>

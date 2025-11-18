@@ -3,18 +3,47 @@
 
 import { Form, FormLabel, FormControl, FormCheck, Row, Col, FormSelect, Button } from "react-bootstrap";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import { useParams } from "next/navigation";
-import * as db from "../../../../Database";
+import { useParams, redirect } from "next/navigation";
+import { useState, useEffect } from "react";
+import * as client from "../client";
+import { addAssignment, editAssignment, updateAssignment, deleteAssignment, setAssignments } from "../reducer";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../../../store";
+import { v4 as uuidv4 } from "uuid";
 
 export default function AssignmentEditor() {
   const params = useParams<{ cid: string; aid: string; }>();
-  const assignments = db.assignments;
-  const assignment = assignments.filter((asmnt : any) => asmnt._id === params.aid);
+  const { assignments } = useSelector((state: RootState) => state.assignmentsReducer);
+  const dispatch = useDispatch();
+  const fetchAssignments = async () => {
+   const assignments = await client.findAssignmentsForCourse(params.cid as string); 
+   dispatch(setAssignments(assignments));
+};
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+  const assignment = assignments.find((assignment : any) => assignment._id === params.aid);
+  const [ assignmentTitle, setAssignmentTitle ] = useState((assignment as any).title);
+  const onUpdateAssignment = async (cid: string, aid: string, assignment: any) => {
+	await client.updateAssignment(cid, aid, assignment);
+	const newAssignment = assignments.map((a: any) => a._id === assignment._id ? assignment : a);
+	dispatch(setAssignments(newAssignment));
+  };
+  const onCreateAssignment = async () => {
+	if (!params.cid) return;
+	if (params.aid !== 'AssignmentEditor') {
+	  onUpdateAssignment(params.cid, params.aid, assignment);
+	  return;
+	}
+	const newAssignment = { title: assignmentTitle, course: params.cid };
+	const asmnt = await client.createAssignmentForCourse(params.cid, newAssignment);
+	dispatch(setAssignments([...assignments, asmnt]));
+  };
   return (
     <div id="wd-assignments-editor">
       <Form>
       <FormLabel>Assignment Name</FormLabel>
-      <FormControl type="text" defaultValue={assignment[0].title}/>
+      <FormControl type="text" defaultValue={assignmentTitle} onChange={(e) => { setAssignmentTitle(e.target.value); dispatch(updateAssignment( {...assignment as any, title: e.target.value} ))}}/>
       <FormControl as="textarea" defaultValue="The assignment is available online Submit a link to the landing page of your Web application running on Netlify. The landing page should include the following: Your full name and section Links to each of the lab  assignments Link to the Kanbas application Links to all relevant source code Links to all relevant source code repositories The Kanbas application should include a link to navigate back to the landing page."/><br/>
       <Row>
       <FormLabel column sm="2">Points</FormLabel>
@@ -102,7 +131,11 @@ export default function AssignmentEditor() {
       </Row>
       <Row>
       <Col>
-      <Button variant="success" href={`/Courses/${params.cid}/Assignments`}>Save</Button>
+      <Button variant="success" href={`/Courses/${params.cid}/Assignments`} 
+      onClick={(e) => { e.preventDefault();
+	onCreateAssignment();
+	redirect(`/Courses/${params.cid}/Assignments`)
+      }}>Save</Button>
       </Col>
       <Col>
       <Button variant="danger" href={`/Courses/${params.cid}/Assignments`}>Cancel</Button>
